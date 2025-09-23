@@ -1,7 +1,0 @@
-name: 'Key Manager'
-type: module
-description: 'Fetches and caches OAuth access tokens (client_credentials) and exposes a JSON endpoint.'
-core_version_requirement: '^10 || ^11'
-package: 'Custom'
-dependencies:
-  - drupal:system

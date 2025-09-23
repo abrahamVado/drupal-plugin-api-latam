@@ -1,0 +1,8 @@
+
+name: 'LATAM API (Single)'
+type: module
+description: 'Single-module: per-country API config (MX/CL/BR), sample endpoints, access control, and internal OAuth Key Manager.'
+package: 'Custom'
+core_version_requirement: '^10 || ^11'
+dependencies:
+  - drupal:system

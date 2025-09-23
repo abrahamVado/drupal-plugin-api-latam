@@ -1,0 +1,32 @@
+
+enabled: true
+require_header_token: false
+header_token: ''
+countries:
+  MX:
+    base_url: 'https://api.example.mx'
+    api_key: ''
+    locale: 'es_MX'
+    oauth_token_url: ''
+    oauth_client_id: ''
+    oauth_client_secret: ''
+    oauth_scope: ''
+    pinpoint_url: ''
+  CL:
+    base_url: 'https://api.example.cl'
+    api_key: ''
+    locale: 'es_CL'
+    oauth_token_url: ''
+    oauth_client_id: ''
+    oauth_client_secret: ''
+    oauth_scope: ''
+    pinpoint_url: ''
+  BR:
+    base_url: 'https://api.example.br'
+    api_key: ''
+    locale: 'pt_BR'
+    oauth_token_url: ''
+    oauth_client_id: ''
+    oauth_client_secret: ''
+    oauth_scope: ''
+    pinpoint_url: ''

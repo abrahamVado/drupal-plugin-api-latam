@@ -1,0 +1,6 @@
+
+latam_api.settings_tab:
+  route_name: latam_api.settings
+  title: 'Settings'
+  base_route: latam_api.settings
+  weight: 0

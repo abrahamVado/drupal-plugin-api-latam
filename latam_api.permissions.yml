@@ -1,0 +1,9 @@
+
+access latam api:
+  title: 'Access LATAM API endpoints'
+  description: 'Allows calling the LATAM API routes.'
+  restrict: true
+
+administer latam api:
+  title: 'Administer LATAM API settings'
+  description: 'Manage LATAM API configuration.'

@@ -1,0 +1,26 @@
+
+latam_api.settings:
+  path: '/admin/config/services/latam-api'
+  defaults:
+    _form: '\Drupal\latam_api\Form\SettingsForm'
+    _title: 'LATAM API settings'
+  requirements:
+    _permission: 'administer latam api'
+
+latam_api.ping:
+  path: '/api/latam/ping'
+  defaults:
+    _controller: '\Drupal\latam_api\Controller\ApiController::ping'
+    _title: 'LATAM API ping'
+  requirements:
+    _custom_access: '\Drupal\latam_api\Access\ApiAccessCheck::access'
+  methods: [GET]
+
+latam_api.pinpoint:
+  path: '/api/latam/pinpoint'
+  defaults:
+    _controller: '\Drupal\latam_api\Controller\ApiController::postPinpoint'
+    _title: 'LATAM API pinpoint'
+  requirements:
+    _custom_access: '\Drupal\latam_api\Access\ApiAccessCheck::access'
+  methods: [POST]

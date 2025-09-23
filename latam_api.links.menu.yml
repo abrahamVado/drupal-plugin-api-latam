@@ -1,0 +1,7 @@
+
+latam_api.settings:
+  title: 'LATAM API'
+  description: 'Configure LATAM API per-country settings.'
+  route_name: latam_api.settings
+  parent: system.admin_config_services
+  weight: 50
