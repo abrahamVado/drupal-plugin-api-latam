@@ -1,5 +1,5 @@
 
-# LATAM API (Single-module)
+# LATAM API
 
 A Drupal module that exposes JSON endpoints and centralizes per-country API settings. Countries are configurable. Supports API-Key or OAuth2 client_credentials with a built-in token cache. Includes permission gating, optional shared-secret header, and optional rate limiting.
 
@@ -57,13 +57,15 @@ flowchart LR
   C -->|/ping| D[Client Service]
   C -->|/pinpoint| D
 
-  D -->|needs OAuth?| E{OAuth configured?}
+  D -->|needs auth?| E{OAuth configured?}
   E -- yes --> F[KeyManagerService getToken]
   F --> G[(KeyValue cache)]
-  F --> H[OAuth Token URL] --> F
-  E -- no --> I[Use API Key or none]
+  F --> H[OAuth token URL]
+  H --> F
+  E -- no --> I[Use API key or none]
 
-  D -->|Authorization set| J[Upstream API (base_url / pinpoint_url)]
+  D --> J[Upstream API]
   J --> K[Response JSON]
   K --> C --> A
+
 ```
