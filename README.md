@@ -41,20 +41,6 @@ Per country (each code you list):
 
 Auth priority: OAuth (if all OAuth fields are present) → API key → none.
 
-### Configuration overrides (do not commit secrets)
-Prefer `settings.php` to set real secrets per environment:
-```php
-$config['latam_api.settings']['countries']['MX']['oauth_token_url'] = 'https://auth.example.com/oauth/token';
-$config['latam_api.settings']['countries']['MX']['oauth_client_id'] = 'your-client-id';
-$config['latam_api.settings']['countries']['MX']['oauth_client_secret'] = 'your-secret';
-$config['latam_api.settings']['countries']['MX']['oauth_scope'] = 'scope1 scope2';
-
-$config['latam_api.settings']['require_header_token'] = TRUE;
-$config['latam_api.settings']['header_token'] = 'shared-secret-here';
-
-$config['latam_api.settings']['rate_limit']['enabled'] = TRUE;
-$config['latam_api.settings']['rate_limit']['requests_per_minute'] = 120;
-```
 
 ## Permissions
 - `access latam api` – required to hit the endpoints.
