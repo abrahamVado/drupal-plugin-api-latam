@@ -1,7 +1,7 @@
 
 name: 'LATAM API (Single)'
 type: module
-description: 'Single-module: per-country API config (MX/CL/BR), sample endpoints, access control, and internal OAuth Key Manager.'
+description: 'Single-module: per-country API config with configurable country list, sample endpoints, access control, internal OAuth Key Manager, optional rate limiting.'
 package: 'Custom'
 core_version_requirement: '^10 || ^11'
 dependencies:

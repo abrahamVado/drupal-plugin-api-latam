@@ -12,34 +12,22 @@ latam_api.settings:
     header_token:
       type: text
       label: 'Header token value'
+    rate_limit:
+      type: mapping
+      label: 'Rate limiting'
+      mapping:
+        enabled: { type: boolean, label: 'Enable rate limiting' }
+        requests_per_minute: { type: integer, label: 'Requests per minute' }
+    country_codes:
+      type: string
+      label: 'Comma-separated list of country codes'
     countries:
       type: mapping
       label: 'Per-country settings'
       mapping:
-        MX:
+        '*':
           type: mapping
-          mapping:
-            base_url: { type: string, label: 'Base URL' }
-            api_key:  { type: string, label: 'API key (fallback if OAuth not set)' }
-            locale:   { type: string, label: 'Locale' }
-            oauth_token_url: { type: string, label: 'OAuth token URL' }
-            oauth_client_id: { type: string, label: 'OAuth client id' }
-            oauth_client_secret: { type: string, label: 'OAuth client secret' }
-            oauth_scope: { type: string, label: 'OAuth scope' }
-            pinpoint_url: { type: string, label: 'Pinpoint endpoint URL' }
-        CL:
-          type: mapping
-          mapping:
-            base_url: { type: string, label: 'Base URL' }
-            api_key:  { type: string, label: 'API key (fallback if OAuth not set)' }
-            locale:   { type: string, label: 'Locale' }
-            oauth_token_url: { type: string, label: 'OAuth token URL' }
-            oauth_client_id: { type: string, label: 'OAuth client id' }
-            oauth_client_secret: { type: string, label: 'OAuth client secret' }
-            oauth_scope: { type: string, label: 'OAuth scope' }
-            pinpoint_url: { type: string, label: 'Pinpoint endpoint URL' }
-        BR:
-          type: mapping
+          label: 'Country config'
           mapping:
             base_url: { type: string, label: 'Base URL' }
             api_key:  { type: string, label: 'API key (fallback if OAuth not set)' }

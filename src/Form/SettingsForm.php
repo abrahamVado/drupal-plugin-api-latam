@@ -45,13 +45,44 @@ final class SettingsForm extends ConfigFormBase {
       ],
     ];
 
+    $form['rate_limit'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Rate limiting'),
+      '#open' => FALSE,
+    ];
+    $rate = (array) ($c->get('rate_limit') ?? []);
+    $form['rate_limit']['rate_limit_enabled'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Enable rate limiting'),
+      '#default_value' => !empty($rate['enabled']),
+    ];
+    $form['rate_limit']['requests_per_minute'] = [
+      '#type' => 'number',
+      '#title' => $this->t('Requests per minute'),
+      '#default_value' => (int) ($rate['requests_per_minute'] ?? 60),
+      '#min' => 1,
+    ];
+
+    $form['country_codes'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Country codes (comma-separated)'),
+      '#description' => $this->t('Example: MX,CL,BR. Add or remove codes to control which country fieldsets appear.'),
+      '#default_value' => $c->get('country_codes') ?? 'MX,CL,BR',
+    ];
+
     $form['countries'] = [
       '#type' => 'details',
       '#title' => $this->t('Per-country settings'),
       '#open' => TRUE,
     ];
 
-    foreach (['MX', 'CL', 'BR'] as $cc) {
+    $codes = array_filter(array_map('trim', explode(',', (string) ($c->get('country_codes') ?? 'MX,CL,BR'))));
+    if (!$codes) {
+      $codes = ['MX','CL','BR'];
+    }
+
+    foreach ($codes as $cc) {
+      $cc = strtoupper($cc);
       $form['countries'][$cc] = [
         '#type' => 'fieldset',
         '#title' => $this->t('@cc settings', ['@cc' => $cc]),
@@ -103,42 +134,39 @@ final class SettingsForm extends ConfigFormBase {
 
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     $v = $form_state->getValues();
+
+    $codes = array_filter(array_map('trim', explode(',', (string) $v['country_codes'])));
+    $codes = array_values(array_unique(array_map('strtoupper', $codes)));
+    if (!$codes) {
+      $codes = ['MX','CL','BR'];
+    }
+
+    $countries = [];
+    foreach ($codes as $cc) {
+      $countries[$cc] = [
+        'base_url' => (string) ($v["{$cc}_base_url"] ?? ''),
+        'api_key'  => (string) ($v["{$cc}_api_key"] ?? ''),
+        'locale'   => (string) ($v["{$cc}_locale"] ?? ''),
+        'oauth_token_url' => (string) ($v["{$cc}_oauth_token_url"] ?? ''),
+        'oauth_client_id' => (string) ($v["{$cc}_oauth_client_id"] ?? ''),
+        'oauth_client_secret' => (string) ($v["{$cc}_oauth_client_secret"] ?? ''),
+        'oauth_scope' => (string) ($v["{$cc}_oauth_scope"] ?? ''),
+        'pinpoint_url' => (string) ($v["{$cc}_pinpoint_url"] ?? ''),
+      ];
+    }
+
+    $rate = [
+      'enabled' => (bool) ($v['rate_limit_enabled'] ?? false),
+      'requests_per_minute' => (int) ($v['requests_per_minute'] ?? 60),
+    ];
+
     $save = [
       'enabled' => (bool) $v['enabled'],
       'require_header_token' => (bool) $v['require_header_token'],
       'header_token' => (string) $v['header_token'],
-      'countries' => [
-        'MX' => [
-          'base_url' => (string) $v['MX_base_url'],
-          'api_key'  => (string) $v['MX_api_key'],
-          'locale'   => (string) $v['MX_locale'],
-          'oauth_token_url' => (string) $v['MX_oauth_token_url'],
-          'oauth_client_id' => (string) $v['MX_oauth_client_id'],
-          'oauth_client_secret' => (string) $v['MX_oauth_client_secret'],
-          'oauth_scope' => (string) $v['MX_oauth_scope'],
-          'pinpoint_url' => (string) $v['MX_pinpoint_url'],
-        ],
-        'CL' => [
-          'base_url' => (string) $v['CL_base_url'],
-          'api_key'  => (string) $v['CL_api_key'],
-          'locale'   => (string) $v['CL_locale'],
-          'oauth_token_url' => (string) $v['CL_oauth_token_url'],
-          'oauth_client_id' => (string) $v['CL_oauth_client_id'],
-          'oauth_client_secret' => (string) $v['CL_oauth_client_secret'],
-          'oauth_scope' => (string) $v['CL_oauth_scope'],
-          'pinpoint_url' => (string) $v['CL_pinpoint_url'],
-        ],
-        'BR' => [
-          'base_url' => (string) $v['BR_base_url'],
-          'api_key'  => (string) $v['BR_api_key'],
-          'locale'   => (string) $v['BR_locale'],
-          'oauth_token_url' => (string) $v['BR_oauth_token_url'],
-          'oauth_client_id' => (string) $v['BR_oauth_client_id'],
-          'oauth_client_secret' => (string) $v['BR_oauth_client_secret'],
-          'oauth_scope' => (string) $v['BR_oauth_scope'],
-          'pinpoint_url' => (string) $v['BR_pinpoint_url'],
-        ],
-      ],
+      'rate_limit' => $rate,
+      'country_codes' => implode(',', $codes),
+      'countries' => $countries,
     ];
 
     $this->configFactory()->getEditable('latam_api.settings')->setData($save)->save();

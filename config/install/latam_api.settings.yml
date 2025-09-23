@@ -2,6 +2,10 @@
 enabled: true
 require_header_token: false
 header_token: ''
+rate_limit:
+  enabled: false
+  requests_per_minute: 60
+country_codes: 'MX,CL,BR'
 countries:
   MX:
     base_url: 'https://api.example.mx'

@@ -17,7 +17,7 @@ final class ApiController extends ControllerBase {
     return new self($container->get('latam_api.client'));
   }
 
-  /** GET /api/latam/ping?cc=MX */
+  /** GET /api/latam/ping?cc=XX */
   public function ping(): JsonResponse {
     $cc = strtoupper((string) (\Drupal::request()->query->get('cc') ?? 'MX'));
     $info = $this->client->getCountryInfo($cc);
@@ -32,7 +32,7 @@ final class ApiController extends ControllerBase {
     ]);
   }
 
-  /** POST /api/latam/pinpoint?cc=MX */
+  /** POST /api/latam/pinpoint?cc=XX */
   public function postPinpoint(Request $request): JsonResponse {
     $cc = strtoupper((string) ($request->query->get('cc') ?? 'MX'));
     $info = $this->client->getCountryInfo($cc);
@@ -44,13 +44,6 @@ final class ApiController extends ControllerBase {
     $payload = json_decode($request->getContent(), true);
     if (!is_array($payload)) {
       return new JsonResponse(['ok' => false, 'error' => 'Invalid JSON body'], 400);
-    }
-
-    $required = ['email','perfil','invInicial','invMensual','plazo','NumContrato','fondo','clave','esceConservador','nameTemplateEcommerce','versionTemplateEcommerce','hrefEcommerce'];
-    foreach ($required as $k) {
-      if (!array_key_exists($k, $payload)) {
-        return new JsonResponse(['ok' => false, 'error' => "Missing field: $k"], 400);
-      }
     }
 
     $resp = $this->client->request($cc, 'POST', $pinpointUrl, [
