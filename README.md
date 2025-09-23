@@ -100,22 +100,37 @@ curl -X POST 'https://your-site.test/api/latam/pinpoint?cc=MX'   -H 'Content-Typ
 
 ## Mermaid diagram
 ```mermaid
-flowchart LR
-  A[Client] -->|HTTP| B{AccessCheck}
-  B -->|permission ok| C[ApiController]
-  B -->|forbidden| Z[[403 or 429]]
+flowchart TB
+  A[Client]
+  B{AccessCheck}
+  C[ApiController]
+  D[Client Service]
+  E{OAuth configured?}
+  F[KeyManagerService getToken]
+  G[(KeyValue cache)]
+  H[OAuth token URL]
+  I[Use API key or none]
+  J[Upstream API]
+  K[Response JSON]
+  Z[[403 or 429]]
 
-  C -->|/ping| D[Client Service]
+  A -->|HTTP| B
+  B -->|permission ok| C
+  B -->|forbidden| Z
+
+  C -->|/ping| D
   C -->|/pinpoint| D
 
-  D -->|needs auth?| E{OAuth configured?}
-  E -- yes --> F[KeyManagerService getToken]
-  F --> G[(KeyValue cache)]
-  F --> H[OAuth token URL]
+  D -->|needs auth?| E
+  E -- yes --> F
+  F --> G
+  F --> H
   H --> F
-  E -- no --> I[Use API key or none]
+  E -- no --> I
 
-  D --> J[Upstream API]
-  J --> K[Response JSON]
-  K --> C --> A
+  D --> J
+  J --> K
+  K --> C
+  C --> A
+
 ```
