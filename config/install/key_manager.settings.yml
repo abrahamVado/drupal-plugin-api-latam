@@ -1,0 +1,5 @@
+login_endpoint: ''
+oauth_client_id: ''
+oauth_client_secret: ''
+oauth_scope: ''
+token_ttl_seconds: 780

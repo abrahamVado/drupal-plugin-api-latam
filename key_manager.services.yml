@@ -1,0 +1,4 @@
+services:
+  key_manager.service:
+    class: 'Drupal\key_manager\Service\KeyManagerService'
+    arguments: ['@keyvalue', '@http_client', '@config.factory']

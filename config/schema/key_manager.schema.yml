@@ -1,0 +1,19 @@
+key_manager.settings:
+  type: config_object
+  label: 'Key Manager settings'
+  mapping:
+    login_endpoint:
+      type: string
+      label: 'Login endpoint URL'
+    oauth_client_id:
+      type: string
+      label: 'OAuth client id'
+    oauth_client_secret:
+      type: string
+      label: 'OAuth client secret'
+    oauth_scope:
+      type: string
+      label: 'OAuth scope (optional)'
+    token_ttl_seconds:
+      type: integer
+      label: 'Token TTL (seconds)'

@@ -1,0 +1,8 @@
+access key manager:
+  title: 'Access Key Manager endpoint'
+  description: 'Allows calling the Key Manager JSON endpoint.'
+  restrict: true
+
+administer key manager:
+  title: 'Administer Key Manager settings'
+  description: 'Manage OAuth endpoint and credentials.'

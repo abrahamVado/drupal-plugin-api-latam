@@ -1,0 +1,6 @@
+key_manager.settings:
+  title: 'Key Manager'
+  description: 'Configure OAuth client and token settings.'
+  route_name: key_manager.settings
+  parent: system.admin_config_services
+  weight: 50
