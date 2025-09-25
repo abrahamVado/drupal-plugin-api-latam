@@ -23,6 +23,36 @@ A Drupal module that exposes JSON endpoints and centralizes per-country API sett
    ```bash
    drush en latam_api -y && drush cr
    ```
+## File structure
+```
+drupal-plugin-api-latam/
+└─ web/modules/custom/latam_api/                 ← existing module root (keep)
+   ├─ latam_api.info.yml                          ← existing
+   ├─ latam_api.routing.yml                       ← ADD: route for the IndiVideo host page
+   ├─ latam_api.libraries.yml                     ← ADD: JS library definition for embed logic
+   ├─ latam_api.services.yml                      ← (optional) only if we need services later; else omit
+   ├─ README.md                                   ← UPDATE: usage docs for shortcode + host page
+   ├─ config/
+   │  ├─ schema/
+   │  │  └─ latam_api.schema.yml                  ← UPDATE: add config keys for IndiVideo
+   │  └─ install/                                 ← (no default config unless you want it pre-seeded)
+   ├─ src/
+   │  ├─ Controller/
+   │  │  └─ IndiVideoController.php               ← ADD: renders the host page using config
+   │  ├─ Form/
+   │  │  └─ SettingsForm.php                      ← UPDATE: extend existing config form with video settings
+   │  ├─ Plugin/
+   │  │  └─ Filter/
+   │  │     └─ IndiVideoFilter.php                ← ADD: shortcode filter for [individeo]
+   │  └─ Validation/                              ← (optional) JSON validation helpers for vars
+   ├─ templates/
+   │  └─ latam-individeo-page.html.twig           ← ADD: host page template (theme-responsible styling)
+   ├─ assets/
+   │  └─ js/
+   │     └─ individeo.embed.js                    ← ADD: vanilla JS for building iframe URL client-side
+   └─ tests/                                      ← (empty for now; no tests as requested)
+
+```
 
 ## Configure
 `/admin/config/services/latam-api`
