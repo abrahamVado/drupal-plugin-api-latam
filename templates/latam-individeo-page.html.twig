@@ -1,0 +1,12 @@
+{#
+  Template for IndiVideo host page.
+  Site theme controls final styling.
+#}
+
+<div class="latam-individeo-page">
+  <div class="individeo-embed"
+       data-video-base="{{ settings.base_url }}"
+       data-vars='{{ settings.vars_json|e('html_attr') }}'>
+    <noscript>{{ 'Enable JavaScript to view the IndiVideo.'|t }}</noscript>
+  </div>
+</div>

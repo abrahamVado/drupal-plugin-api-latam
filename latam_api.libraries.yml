@@ -1,0 +1,6 @@
+individeo.embed:
+  js:
+    assets/js/individeo.embed.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
